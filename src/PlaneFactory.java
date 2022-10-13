@@ -24,6 +24,7 @@ public class PlaneFactory extends TransportFactory {
                 plane = startFactory();
                 break;
             case 2:
+
                 break;
             default:
                 System.out.println("\nInput number invalid");
