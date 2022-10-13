@@ -4,7 +4,7 @@ public class Navigator {
     Scanner sc = new Scanner(System.in);
     TransportFactory tf = new TransportFactory();
 
-    public void start(){
+    public Transport customize(){
         Transport transport = null;
         whileStatement:
         while (true) {
@@ -17,11 +17,9 @@ public class Navigator {
             int option = sc.nextInt();
             switch (option) {
                 case 1:
-                    transport = tf.createTransport(false);
-                    break;
+                    return tf.createTransport(false);
                 case 2:
-                    transport = tf.createTransport(true);
-                    break;
+                    return tf.createTransport(true);
                 case 0:
                     System.out.println("\nAuf viedersehn!");
                     break whileStatement;
@@ -30,5 +28,6 @@ public class Navigator {
                     break;
             }
         }
+        return null;
     }
 }
