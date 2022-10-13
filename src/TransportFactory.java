@@ -3,6 +3,7 @@ public class TransportFactory {
 
         if (isCar) return new Transport(CarFactory.createCar(),null);
 
-        return null;
+        return new Transport(null,PlaneFactory.createPlane());
+
     }
 }
