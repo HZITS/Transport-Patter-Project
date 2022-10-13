@@ -1,4 +1,7 @@
-public class Transport {
+import ConcreteObjects.Car;
+import ConcreteObjects.Plane;
+
+abstract class Transport {
     String name;
     Car car;
     Plane plane;

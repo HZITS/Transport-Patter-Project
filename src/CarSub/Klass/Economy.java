@@ -1,24 +1,23 @@
-package CarSub.FuelType;
+package CarSub.Klass;
 
 import CarSub.CarDecorator;
 import ConcreteObjects.Car;
 
-public class NaturalGas extends CarDecorator {
-
-    public NaturalGas(Car car) {
+public class Economy extends CarDecorator {
+    public Economy(Car car) {
         super(car);
     }
     @Override
     public double getSpeed() {
-        return car.getSpeed()-8;
+        return car.getSpeed();
     }
     public double getKpl() {
         return car.getKpl()*0.9;
     }
     public double getFuelPrice() {
-        return car.getFuelPrice()-15;
+        return car.getFuelPrice();
     }
     public String getDescription(){
-        return car.getDescription()+" with fuel type NaturalGas";
+        return car.getDescription()+" Economy class";
     }
 }
