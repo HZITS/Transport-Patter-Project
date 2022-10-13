@@ -9,6 +9,10 @@ public class CarDecorator extends Car {
         this.car=car;
     }
 
+    public CarDecorator() {
+
+    }
+
     public Car getCar() {
         return car;
     }

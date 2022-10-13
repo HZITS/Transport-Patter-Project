@@ -1,13 +1,12 @@
 import ConcreteObjects.Car;
 import ConcreteObjects.Plane;
 
-abstract class Transport {
+public class Transport {
     String name;
     Car car;
     Plane plane;
 
-    public Transport(String name, Car car, Plane plane) {
-        this.name = name;
+    public Transport(Car car, Plane plane) {
         this.car = car;
         this.plane = plane;
     }

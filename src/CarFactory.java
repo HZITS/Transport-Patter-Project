@@ -4,6 +4,6 @@ import ConcreteObjects.Car;
 
 public class CarFactory extends TransportFactory{
     public static Car createCar() {
-        return new Sedan(new CarDecorator());
+        return new Car();
     }
 }

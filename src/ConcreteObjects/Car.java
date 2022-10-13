@@ -1,6 +1,6 @@
 package ConcreteObjects;
 
-public abstract class Car{
+public class Car{
     double fuelPrice = 50.0;
     double speed = 90.0;
     double kpl = 0.1; //на каждый метр, (100km - 10)
