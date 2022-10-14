@@ -1,3 +1,5 @@
+import ConcreteObjects.Car;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -5,6 +7,22 @@ import java.util.Scanner;
 
 public class CarNavigate {
     Connection conn;
+    Car car=new Car();
+    double velocity=car.getSpeed();
+
+    double kpl= car.getKpl();
+    double driver= car.getDriver();
+    double road= car.getRoad();
+    double distance =getDistance();
+    double FP= car.getFuelPrice()*distance*kpl;
+    public void CarTime(){
+        double time=distance/velocity;
+        System.out.println("The time is"+time);
+    }
+    public void CarMoney(){
+        double money=FP+road+driver;
+        System.out.println("The money is "+money);
+    }
     public int getDistance(){
         String city1,city2;
         Scanner sc=new Scanner(System.in);
