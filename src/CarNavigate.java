@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class CarNavigate {
     Connection conn;
-    public void getDistance(){
+    public int getDistance(){
         String city1,city2;
         Scanner sc=new Scanner(System.in);
         System.out.println("Write please my friend the first city from Kazakhstan please");
@@ -13,7 +13,7 @@ public class CarNavigate {
         System.out.println("My friend please write the second city");
         city2=sc.nextLine();
         int distance=routes(city1,city2);
-
+        return distance;
     }
     private int routes(String a2, String b2) {
 

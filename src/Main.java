@@ -35,7 +35,7 @@ public class Main {
         if(option==1){
             if(db.login_user()) navigator.customize();
 
-        }else if(option==2) if(db.login_user()) navigator.customize();
+        }else if(option==2) db.create_user();
 
     }
 }
