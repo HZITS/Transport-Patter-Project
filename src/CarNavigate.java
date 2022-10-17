@@ -1,4 +1,5 @@
 import ConcreteObjects.Car;
+import DataBase.DB;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,7 +7,7 @@ import java.sql.ResultSet;
 import java.util.Scanner;
 
 public class CarNavigate {
-    Connection conn;
+    Connection conn = DB.getInstance().getConn();
     Car car=new Car();
     double velocity=car.getSpeed();
 

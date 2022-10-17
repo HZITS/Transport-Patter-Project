@@ -1,10 +1,12 @@
+import DataBase.DB;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Scanner;
 
 public class PlaneNavigate {
-    Connection conn;
+    Connection conn = DB.getInstance().getConn();
     public void getDistance(){
         String city1,city2;
         Scanner sc=new Scanner(System.in);

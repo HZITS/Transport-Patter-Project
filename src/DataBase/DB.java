@@ -6,12 +6,36 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DB {
-    private final String url = "jdbc:postgresql://localhost/designpattern";
+    private final String url = "jdbc:postgresql://localhost/";
     private final String user = "postgres";
-    private final String password = "Aisha2016";
-
+    private final String password = "nurdaulet";
     String username,password1;
+    private static DB uniqueDB;
+    private Connection conn;
+    private DB(){}
+    public static DB getInstance(){
+        if(uniqueDB == null){
+            uniqueDB = new DB();
+        }
+        return uniqueDB;
+    }
+    public Connection getConn(){
+        if(conn == null){
+            conn = connect();
+        }
+        return conn;
+    }
+    public Connection connect() {
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(url+"Observer", user, password);
+            System.out.println("Connected to the PostgreSQL server successfully.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
 
+        return conn;
+    }
     public boolean login_user() {
         Scanner scan = new Scanner(System.in);
 
@@ -20,14 +44,13 @@ public class DB {
         System.out.println("Write your password");
         password1=scan.nextLine();
         String user1,user_pas;
-        try (Connection con = DriverManager.getConnection(url, user, password);
-             PreparedStatement pst = con.prepareStatement("SELECT * FROM users where username='"+username+"' and password='"+password1+"'");
+        try (PreparedStatement pst = getConn().prepareStatement("SELECT * FROM users where username='"+username+"' and password='"+password1+"'");
              ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
                 user1=rs.getString("username");
                 user_pas=rs.getString("password");
-                if(user1==username && user_pas==password1) {
+                if(user1.equals(username) && user_pas.equals(password1)) {
                     return true;
                 }
 

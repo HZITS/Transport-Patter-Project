@@ -6,11 +6,11 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
-    private final String url = "jdbc:postgresql://localhost/design_pattern";
+/*    private final String url = "jdbc:postgresql://localhost/design_pattern";
     private final String user = "postgres";
     private final String password = "Aisha2016";
-
-    public Connection connect() {
+*/
+/*    public Connection connect() {
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url, user, password);
@@ -20,14 +20,12 @@ public class Main {
         }
 
         return conn;
-    }
+    }*/
     public static void main(String [] args){
         Scanner sc=new Scanner(System.in);
-        Main main=new Main();
-        main.connect();
-        DB db=new DB();
+        DB db = DB.getInstance();
         Navigator navigator = new Navigator();
-        System.out.println("Welcomen to our program");
+        System.out.println("Welcome to our program");
         System.out.println("Please verify or create an account");
         System.out.println("1.Login");
         System.out.println("2.Create");
