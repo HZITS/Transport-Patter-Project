@@ -44,7 +44,8 @@ public class DB {
         System.out.println("Write your password");
         password1=scan.nextLine();
         String user1,user_pas;
-        try (PreparedStatement pst = getConn().prepareStatement("SELECT * FROM users where username='"+username+"' and password='"+password1+"'");
+        String sql = "SELECT * FROM users where username='"+username+"' and password='"+password1+"'";
+        try (PreparedStatement pst = conn.prepareStatement(sql);
              ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
@@ -82,6 +83,8 @@ public class DB {
 
             Logger lgr = Logger.getLogger(DB.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
         }
 
     }
