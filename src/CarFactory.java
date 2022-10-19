@@ -44,7 +44,7 @@ public class CarFactory extends TransportFactory{
         System.out.println("5) NaturalGas");
         Scanner sc = new Scanner(System.in);
         int type = sc.nextInt();
-        while (type<1 && type>5){
+        while (type<1 || type>5){
             System.out.println("Please type number between 1 and 5");
             System.out.println("1) Petrol");
             System.out.println("2) Diesel");
@@ -74,7 +74,7 @@ public class CarFactory extends TransportFactory{
         System.out.println("6) Minivan");
         Scanner sc = new Scanner(System.in);
         int type = sc.nextInt();
-        while (type<1 && type>6){
+        while (type<1 || type>6){
             System.out.println("Please type number between 1 and 6");
             System.out.println("1) Sedan");
             System.out.println("2) Hatchback");

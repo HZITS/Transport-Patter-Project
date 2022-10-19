@@ -75,9 +75,9 @@ public class DB {
         try (Connection con = DriverManager.getConnection(url, user, password);
              PreparedStatement pst = con.prepareStatement("insert into users(username,password) values('"+username+"','"+password1+"');");
              ResultSet rs = pst.executeQuery()) {
-            pst.setString(1,username);
-            pst.setString(2, password1);
-            pst.executeUpdate();
+//            pst.setString(1,username);
+//            pst.setString(2, password1);
+//            pst.executeUpdate();
 
         } catch (SQLException ex) {
 
