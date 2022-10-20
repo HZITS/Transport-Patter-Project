@@ -9,29 +9,7 @@ import PlaneSub.Klass.Luxury;
 import java.util.Scanner;
 
 public class PlaneFactory extends TransportFactory {
-    public static Plane createPlane() {
-        Scanner sc = new Scanner(System.in);
 
-        System.out.println("Would you like to customize or straight to the point:");
-        System.out.println("1. Yes");
-        System.out.println("2. No");
-
-        System.out.print("\nEnter option (1-2): ");
-        Plane plane = null;
-        int option = sc.nextInt();
-        switch (option) {
-            case 1:
-                plane = startFactory();
-                break;
-            case 2:
-
-                break;
-            default:
-                System.out.println("\nInput number invalid");
-                break;
-        }
-        return plane;
-    }
     public static Plane startFactory(){
         System.out.println("Choose body type of plane");
         Plane plane = planeBodyTypes();
@@ -40,8 +18,6 @@ public class PlaneFactory extends TransportFactory {
 
         return plane;
     }
-
-
 
     private static Plane planeBodyTypes() {
         System.out.println("Enter number:");
