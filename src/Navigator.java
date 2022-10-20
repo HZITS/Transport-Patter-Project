@@ -3,12 +3,30 @@ import java.util.Scanner;
 public class Navigator {
     Scanner sc = new Scanner(System.in);
     TransportFactory tf = new TransportFactory();
+    Transport transport;
+
+    public void qwerty(){
+        System.out.println("");
+        System.out.println("1. Customize");
+        System.out.println("2. Choose option(cheapest or fastest)");
+        int option = sc.nextInt();
+        if(option==1){
+            transport = customize();
+            System.out.println(transport.getDescription());
+        }else{
+            System.out.println("Choose option:");
+            System.out.println("1. Cheapest");
+            System.out.println("2. Fastest");
+            option = sc.nextInt();
+            if(option==1) cheapTrip();
+            else fastTrip();
+        }
+    }
 
     public Transport customize(){
-        Transport transport = null;
         whileStatement:
         while (true) {
-            System.out.println("\nWelcome to 3Gis!\nWould you like to travel by a plane or a car?\n");
+            System.out.println("\nWould you like to travel by a plane or a car?\n");
             System.out.println("1. Plane");
             System.out.println("2. Car");
             System.out.println("0. Exit");
@@ -29,5 +47,11 @@ public class Navigator {
             }
         }
         return null;
+    }
+    public void cheapTrip(){
+
+    }
+    public void fastTrip(){
+
     }
 }

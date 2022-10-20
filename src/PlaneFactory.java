@@ -32,7 +32,7 @@ public class PlaneFactory extends TransportFactory {
         }
         return plane;
     }
-    private static Plane startFactory(){
+    public static Plane startFactory(){
         System.out.println("Choose body type of plane");
         Plane plane = planeBodyTypes();
         System.out.println("Choose klass of plane");

@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 public class DB {
     private final String url = "jdbc:postgresql://localhost/";
     private final String user = "postgres";
-    private final String password = "1234";
+    private final String password = "nurdaulet";
     String username,password1;
     private static DB uniqueDB;
     private Connection conn;
@@ -87,5 +87,18 @@ public class DB {
             System.out.println(e.getMessage());
         }
 
+    }
+    public int routes(String A, String B) {
+        String sql = "Select * from routes where city1='"+A+"'and city2='"+B+"';";
+        try( PreparedStatement pst = conn.prepareStatement(sql);
+             ResultSet rs = pst.executeQuery()){
+            while (rs.next()) {
+                return rs.getInt("distance");
+            }
+        }catch (Exception e){
+            System.out.println(e);
+
+        }
+        return 0;
     }
 }

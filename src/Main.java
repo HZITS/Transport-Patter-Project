@@ -25,20 +25,32 @@ public class Main {
         Scanner sc=new Scanner(System.in);
         DB db = DB.getInstance();
         Navigator navigator = new Navigator();
-        System.out.println("Welcome to our program");
+        System.out.println("\nWelcome to 3Gis!");
         System.out.println("Please verify or create an account");
         System.out.println("1.Login");
         System.out.println("2.Create");
         int option=sc.nextInt();
         Transport transport;
+        String A, B;
+        int[] distance = new int[5];
         if(option==1){
             if(db.login_user()){
-                transport = navigator.customize();
+                System.out.println("All cities: Almaty, Astana, Shymkent, Aktobe, Karaganda, Taraz, Pavlodar, Ust-kamenogorsk, Semey, Atyrau, Kyzylorda, Kostanai, Uralsk, Aktau.");
+                System.out.println("Destination point A");
+                A = sc.nextLine();
+                A = sc.nextLine();
+                System.out.println("Destination point B");
+                B = sc.nextLine();
+                System.out.println(A+" | "+B);
+                distance[1]=db.routes(A,B);
+                System.out.println("Distance is "+ distance[1]+" km");
+                navigator.qwerty();
+/*                transport = navigator.customize();
                 if(transport.car!=null){
                     System.out.println(transport.car.getDescription());
                 }else{
                     System.out.println(transport.plane.getDescription());
-                }
+                }*/
             }
 
         }else if(option==2) db.create_user();

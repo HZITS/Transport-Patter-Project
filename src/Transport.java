@@ -11,5 +11,9 @@ public class Transport {
         this.plane = plane;
     }
 
-
+    public String getDescription(){
+        if(plane==null){
+            return car.getDescription();
+        }else return plane.getDescription();
+    }
 }

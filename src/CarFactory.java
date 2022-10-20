@@ -17,8 +17,7 @@ public class CarFactory extends TransportFactory{
         int option = sc.nextInt();
         switch (option) {
             case 1:
-                car = startFactory();
-                break;
+                return startFactory();
             case 2:
                 break;
             default:
@@ -27,7 +26,7 @@ public class CarFactory extends TransportFactory{
         }
         return car;
     }
-    private static Car startFactory(){
+    public static Car startFactory(){
         Car car;
         System.out.println("Choose body type of car");
         car = carBodyTypes();
