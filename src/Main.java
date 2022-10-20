@@ -44,7 +44,7 @@ public class Main {
                 System.out.println(A+" | "+B);
                 distance[1]=db.routes(A,B);
                 System.out.println("Distance is "+ distance[1]+" km");
-                navigator.qwerty();
+                navigator.qwerty(A, B, distance[1]);
 /*                transport = navigator.customize();
                 if(transport.car!=null){
                     System.out.println(transport.car.getDescription());
