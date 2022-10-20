@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 public class DB {
     private final String url = "jdbc:postgresql://localhost/";
     private final String user = "postgres";
-    private final String password = "nurdaulet";
+    private final String password = "1234";
     String username,password1;
     private static DB uniqueDB;
     private Connection conn;
@@ -45,7 +45,7 @@ public class DB {
         password1=scan.nextLine();
         String user1,user_pas;
         String sql = "SELECT * FROM users where username='"+username+"' and password='"+password1+"'";
-        try (PreparedStatement pst = conn.prepareStatement(sql);
+        try (PreparedStatement pst = getConn().prepareStatement(sql);
              ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {

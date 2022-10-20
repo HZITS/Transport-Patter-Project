@@ -30,8 +30,16 @@ public class Main {
         System.out.println("1.Login");
         System.out.println("2.Create");
         int option=sc.nextInt();
+        Transport transport;
         if(option==1){
-            if(db.login_user()) navigator.customize();
+            if(db.login_user()){
+                transport = navigator.customize();
+                if(transport.car!=null){
+                    System.out.println(transport.car.getDescription());
+                }else{
+                    System.out.println(transport.plane.getDescription());
+                }
+            }
 
         }else if(option==2) db.create_user();
 

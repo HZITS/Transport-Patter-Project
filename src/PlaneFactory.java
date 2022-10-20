@@ -34,11 +34,11 @@ public class PlaneFactory extends TransportFactory {
     }
     private static Plane startFactory(){
         System.out.println("Choose body type of plane");
-        planeBodyTypes();
-        System.out.println("Choose fuel type of car");
-        PlaneKlasses();
+        Plane plane = planeBodyTypes();
+        System.out.println("Choose klass of plane");
+        plane = PlaneKlasses(plane);
 
-        return new Plane();
+        return plane;
     }
 
 
@@ -51,7 +51,7 @@ public class PlaneFactory extends TransportFactory {
         System.out.println("4) Propeller");
         Scanner sc = new Scanner(System.in);
         int type = sc.nextInt();
-        while (type<1 && type>4){
+        while (type<1 || type>4){
             System.out.println("Please type number between 1 and 4");
             System.out.println("1) Default");
             System.out.println("2) Biplane");
@@ -69,7 +69,7 @@ public class PlaneFactory extends TransportFactory {
         else if(type==4) return new Propeller(new Plane());
         else return null;
     }
-    private static Plane PlaneKlasses() {
+    private static Plane PlaneKlasses(Plane plane) {
         System.out.println("Enter number:");
         System.out.println("1) Default");
         System.out.println("2) Economy");
@@ -77,7 +77,7 @@ public class PlaneFactory extends TransportFactory {
         System.out.println("4) Luxury");
         Scanner sc = new Scanner(System.in);
         int type = sc.nextInt();
-        while (type<1 && type>4){
+        while (type<1 || type>4){
             System.out.println("Please type number between 1 and 4");
             System.out.println("1) Default");
             System.out.println("2) Economy");
@@ -85,14 +85,14 @@ public class PlaneFactory extends TransportFactory {
             System.out.println("4) Luxury");
             type=sc.nextInt();
         }
-        return PlaneKlass(type);
+        return PlaneKlass(type, plane);
 
     }
-    private static Plane PlaneKlass(int type){
-        if(type==1) return new Plane();
-        else if(type==2) return new Economy(new Plane());
-        else if(type==3) return new Business(new Plane());
-        else if(type==4) return new Luxury(new Plane());
+    private static Plane PlaneKlass(int type, Plane plane){
+        if(type==1) return plane;
+        else if(type==2) return new Economy(plane);
+        else if(type==3) return new Business(plane);
+        else if(type==4) return new Luxury(plane);
         else return null;
     }
 }
