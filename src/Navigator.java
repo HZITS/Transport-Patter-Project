@@ -25,6 +25,9 @@ public class Navigator {
                 car = transport.car;
             }
             System.out.println(transport.getDescription());
+            System.out.println("Distance from "+ A + " to "+ B + " is "+distance+" km");
+            System.out.println("Money is - " + transport.money(distance) + " tg");
+            System.out.println("Time is - " + transport.displacement(distance)+ " hour");
         }else{
             System.out.println("Choose option:");
             System.out.println("1. Cheapest");

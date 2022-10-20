@@ -39,8 +39,13 @@ public class Transport {
             setMoneyStrategy(planeMoneyCons);
         }
     }
-    public double displacement(int distance){return displacementStrategy.displacement(distance);}
-    public double money(int distance){return moneyStrategy.money(distance);}
+    public double displacement(int distance){
+        return ((double) Math.round(displacementStrategy.displacement(distance)*100))/100;
+    }
+    public double money(int distance){
+        return ((double) Math.round(moneyStrategy.money(distance)*100))/100;
+    }
+
     public String getDescription(){
         if(plane==null){
             return car.getDescription();
