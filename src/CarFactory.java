@@ -5,27 +5,7 @@ import ConcreteObjects.Car;
 import java.util.Scanner;
 
 public class CarFactory extends TransportFactory{
-    public static Car createCar() {
-        Scanner sc = new Scanner(System.in);
 
-        System.out.println("Would you like to customize or straight to the point:");
-        System.out.println("1. Yes");
-        System.out.println("2. No");
-
-        System.out.print("\nEnter option (1-2): ");
-        Car car = null;
-        int option = sc.nextInt();
-        switch (option) {
-            case 1:
-                return startFactory();
-            case 2:
-                break;
-            default:
-                System.out.println("\nInput number invalid");
-                break;
-        }
-        return car;
-    }
     public static Car startFactory(){
         Car car;
         System.out.println("Choose body type of car");
