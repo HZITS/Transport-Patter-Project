@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 public class DB {
     private final String url = "jdbc:postgresql://localhost/";
     private final String user = "postgres";
-    private final String password = "nurdaulet";
+    private final String password = "Aisha2016";
     String username,password1;
     private static DB uniqueDB;
     private Connection conn;
@@ -65,6 +65,35 @@ public class DB {
         }
         return false;
     }
+    public boolean login_admin(){
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Write your username");
+        username=scan.nextLine();
+        System.out.println("Write your password");
+        password1=scan.nextLine();
+        String user1,user_pas;
+        String sql = "SELECT * FROM admins where username='"+username+"' and password='"+password1+"'";
+        try (PreparedStatement pst = getConn().prepareStatement(sql);
+             ResultSet rs = pst.executeQuery()) {
+
+            while (rs.next()) {
+                user1=rs.getString("username");
+                user_pas=rs.getString("password");
+                if(user1.equals(username) && user_pas.equals(password1)) {
+                    return true;
+                }
+
+            }
+
+        } catch (SQLException ex) {
+
+            Logger lgr = Logger.getLogger(
+                    DB.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        return false;
+    }
     public void create_user() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Write your username");
@@ -73,7 +102,7 @@ public class DB {
         password1=scan.nextLine();
         String user1,user_pas;
         try (Connection con = DriverManager.getConnection(url, user, password);
-             PreparedStatement pst = con.prepareStatement("insert into users(username,password) values('"+username+"','"+password1+"');");
+             PreparedStatement pst = con.prepareStatement("insert into users(username,password,status) values('"+username+"','"+password1+"','available');");
              ResultSet rs = pst.executeQuery()) {
 //            pst.setString(1,username);
 //            pst.setString(2, password1);
@@ -100,5 +129,92 @@ public class DB {
 
         }
         return 0;
+    }
+    public void get_users(){
+        String sql="Select * from users";
+        try(PreparedStatement pst=conn.prepareStatement(sql)) {
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+
+                System.out.print(rs.getInt(1));
+                System.out.print(": ");
+                System.out.println(rs.getString(2));
+                System.out.println(": ");
+                System.out.println(rs.getString(4));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } ;
+
+
+    }
+    public void get_users_by_name(String name){
+        String sql = "Select * from users where username='"+name+"' limit 1;";
+        try(PreparedStatement pst=conn.prepareStatement(sql)) {
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+
+                System.out.print(rs.getInt(1));
+                System.out.print(": ");
+                System.out.println(rs.getString(2));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } ;
+
+
+    }
+    public boolean  checkUser(String name){
+        boolean HasUser=false;
+        String sql = "Select * from users where username='"+name+"' limit 1;";
+        try(PreparedStatement pst=conn.prepareStatement(sql)) {
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                HasUser=true;
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return HasUser;
+    }
+    public void deleteUser(int id){
+        String sql = "update users set status='deleted' where user_id="+id;
+        try(PreparedStatement pst=conn.prepareStatement(sql)) {
+            System.out.println("User deleted");
+            }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void banUser(int id){
+        String sql = "update users set status='ban' where user_id="+id;
+        try(PreparedStatement pst=conn.prepareStatement(sql)) {
+            System.out.println("User banned");
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void unBanUser(int id){
+        String sql = "update users set status='available' where user_id="+id;
+        try(PreparedStatement pst=conn.prepareStatement(sql)) {
+            System.out.println("User unbanned");
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void restoreUser(int id){
+        String sql = "update users set status='available' where user_id="+id;
+        try(PreparedStatement pst=conn.prepareStatement(sql)) {
+            System.out.println("User restored");
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
