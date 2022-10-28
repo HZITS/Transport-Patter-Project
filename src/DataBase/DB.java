@@ -1,15 +1,22 @@
 package DataBase;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.util.Date;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 public class DB {
     private final String url = "jdbc:postgresql://localhost/";
     private final String user = "postgres";
     private final String password = "nurdaulet";
+    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     String username,password1;
+    Scanner sc = new Scanner(System.in);
     private static DB uniqueDB;
     private Connection conn;
     private DB(){}
@@ -38,20 +45,21 @@ public class DB {
     }
     public boolean login_user() {
         Scanner scan = new Scanner(System.in);
-
+        Date currentDate = new Date();
         System.out.println("Write your username");
         username=scan.nextLine();
         System.out.println("Write your password");
         password1=scan.nextLine();
         String user1,user_pas;
-        String sql = "SELECT * FROM users where username='"+username+"' and password='"+password1+"' and status='available'";
+        String sql = "SELECT * FROM users where username='"+username+"' and password='"+password1+"';";
         try (PreparedStatement pst = getConn().prepareStatement(sql);
              ResultSet rs = pst.executeQuery()) {
 
             while (rs.next()) {
                 user1=rs.getString("username");
                 user_pas=rs.getString("password");
-                if(user1.equals(username) && user_pas.equals(password1)) {
+                Date unban_date=rs.getDate("unban_date");
+                if(user1.equals(username) && user_pas.equals(password1)&&unban_date.equals(dateFormat.format(currentDate))) {
                     return true;
                 }
 
@@ -194,18 +202,27 @@ public class DB {
         }
     }
     public void banUser(int id){
-        String sql = "update users set status='ban' where user_id="+id;
+        Date currentDate;
+        currentDate = new Date();
+        Calendar c = Calendar.getInstance();
+        c.setTime(currentDate);
+        System.out.println("For how many days you want to ban user?");
+        int days=sc.nextInt();
+        c.add(Calendar.DATE, days);
+        Date currentDatePlusOne = c.getTime();
+
+        String sql = "update users set status='ban', unban_date="+dateFormat.format(currentDatePlusOne)+" where user_id="+id;
         try {
             Statement statement = getConn().createStatement();
             statement.executeUpdate(sql);
-            System.out.println("User banned");
+            System.out.println("User banned for "+ days);
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
     }
     public void unBanUser(int id){
-        String sql = "update users set status='available' where user_id="+id;
+        String sql = "update users set status='available',unban_date = null where user_id="+id;
         try{
             Statement statement = getConn().createStatement();
             statement.executeUpdate(sql);
