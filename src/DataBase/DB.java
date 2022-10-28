@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 public class DB {
     private final String url = "jdbc:postgresql://localhost/";
     private final String user = "postgres";
-    private final String password = "Aisha2016";
+    private final String password = "nurdaulet";
     String username,password1;
     private static DB uniqueDB;
     private Connection conn;
@@ -44,7 +44,7 @@ public class DB {
         System.out.println("Write your password");
         password1=scan.nextLine();
         String user1,user_pas;
-        String sql = "SELECT * FROM users where username='"+username+"' and password='"+password1+"'";
+        String sql = "SELECT * FROM users where username='"+username+"' and password='"+password1+"' and status='available'";
         try (PreparedStatement pst = getConn().prepareStatement(sql);
              ResultSet rs = pst.executeQuery()) {
 
@@ -94,16 +94,18 @@ public class DB {
         }
         return false;
     }
-    public void create_user() {
+    public boolean create_user() {
         Scanner scan = new Scanner(System.in);
         System.out.println("Write your username");
         username=scan.nextLine();
         System.out.println("Write your password");
         password1=scan.nextLine();
         String user1,user_pas;
-        try (Connection con = DriverManager.getConnection(url, user, password);
-             PreparedStatement pst = con.prepareStatement("insert into users(username,password,status) values('"+username+"','"+password1+"','available');");
-             ResultSet rs = pst.executeQuery()) {
+        String sql = "insert into users(username,password) values('"+username+"', '"+password1+"');";
+        try {
+            Statement statement = getConn().createStatement();
+            statement.executeUpdate(sql);
+            return true;
 //            pst.setString(1,username);
 //            pst.setString(2, password1);
 //            pst.executeUpdate();
@@ -115,6 +117,7 @@ public class DB {
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
+        return false;
 
     }
     public int routes(String A, String B) {
@@ -139,8 +142,8 @@ public class DB {
 
                 System.out.print(rs.getInt(1));
                 System.out.print(": ");
-                System.out.println(rs.getString(2));
-                System.out.println(": ");
+                System.out.print(rs.getString(2));
+                System.out.print(": ");
                 System.out.println(rs.getString(4));
             }
         } catch (SQLException e) {
@@ -185,14 +188,16 @@ public class DB {
         String sql = "update users set status='deleted' where user_id="+id;
         try(PreparedStatement pst=conn.prepareStatement(sql)) {
             System.out.println("User deleted");
-            }
+        }
         catch (SQLException e) {
             e.printStackTrace();
         }
     }
     public void banUser(int id){
         String sql = "update users set status='ban' where user_id="+id;
-        try(PreparedStatement pst=conn.prepareStatement(sql)) {
+        try {
+            Statement statement = getConn().createStatement();
+            statement.executeUpdate(sql);
             System.out.println("User banned");
         }
         catch (SQLException e) {
@@ -201,7 +206,9 @@ public class DB {
     }
     public void unBanUser(int id){
         String sql = "update users set status='available' where user_id="+id;
-        try(PreparedStatement pst=conn.prepareStatement(sql)) {
+        try{
+            Statement statement = getConn().createStatement();
+            statement.executeUpdate(sql);
             System.out.println("User unbanned");
         }
         catch (SQLException e) {
