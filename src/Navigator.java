@@ -100,7 +100,6 @@ public class Navigator {
         if(minTransport.equals("Car")){
             System.out.println(car.getDescription()+" is fastest and");
             transport.setCar(car);
-            minTransport = car.getDescription();
             money = transport.money(distance);
         } else {
             System.out.println(plane.getDescription()+" is fastest and");

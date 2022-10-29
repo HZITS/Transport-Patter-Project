@@ -1,10 +1,5 @@
 import DataBase.DB;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.Scanner;
-
 public class Main {
 /*    private final String url = "jdbc:postgresql://localhost/design_pattern";
     private final String user = "postgres";

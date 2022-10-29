@@ -3,6 +3,7 @@ package DataBase;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -58,11 +59,19 @@ public class DB {
             while (rs.next()) {
                 user1=rs.getString("username");
                 user_pas=rs.getString("password");
-                Date unban_date=rs.getDate("unban_date");
-                if(user1.equals(username) && user_pas.equals(password1)&&unban_date.equals(dateFormat.format(currentDate))) {
-                    return true;
+                Date unban_date= rs.getDate("unban_date");
+                LocalDate localDate = null;
+                if(unban_date!=null) localDate = ((java.sql.Date) unban_date).toLocalDate();
+                if(user1.equals(username) && user_pas.equals(password1)) {
+                    if(unban_date==null) return true;
+                    else{
+                        if(localDate.compareTo(LocalDate.parse(dateFormat.format(currentDate)))<=0) return true;
+                        else{
+                            System.out.println("You are banned");
+                            return false;
+                        }
+                    }
                 }
-
             }
 
         } catch (SQLException ex) {
@@ -177,7 +186,7 @@ public class DB {
 
 
     }
-    public boolean  checkUser(String name){
+    public boolean checkUser(String name){
         boolean HasUser=false;
         String sql = "Select * from users where username='"+name+"' limit 1;";
         try(PreparedStatement pst=conn.prepareStatement(sql)) {
@@ -194,7 +203,9 @@ public class DB {
     }
     public void deleteUser(int id){
         String sql = "update users set status='deleted' where user_id="+id;
-        try(PreparedStatement pst=conn.prepareStatement(sql)) {
+        try {
+            Statement statement = getConn().createStatement();
+            statement.executeUpdate(sql);
             System.out.println("User deleted");
         }
         catch (SQLException e) {
@@ -210,11 +221,16 @@ public class DB {
         int days=sc.nextInt();
         c.add(Calendar.DATE, days);
         Date currentDatePlusOne = c.getTime();
-
-        String sql = "update users set status='ban', unban_date="+dateFormat.format(currentDatePlusOne)+" where user_id="+id;
+        LocalDate date = LocalDate.parse(dateFormat.format(currentDatePlusOne));
+        System.out.println(currentDatePlusOne+" | "+dateFormat.format(currentDatePlusOne)+" | "+date);
+        String sql = "update users set status='ban', unban_date= ? where user_id="+id;
         try {
-            Statement statement = getConn().createStatement();
-            statement.executeUpdate(sql);
+/*            Statement statement = getConn().createStatement();
+            statement.executeUpdate(sql);*/
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setDate(1, java.sql.Date.valueOf(date));
+            pst.executeUpdate();
+            pst.close();
             System.out.println("User banned for "+ days);
         }
         catch (SQLException e) {
@@ -234,7 +250,9 @@ public class DB {
     }
     public void restoreUser(int id){
         String sql = "update users set status='available' where user_id="+id;
-        try(PreparedStatement pst=conn.prepareStatement(sql)) {
+        try {
+            Statement statement = getConn().createStatement();
+            statement.executeUpdate(sql);
             System.out.println("User restored");
         }
         catch (SQLException e) {
