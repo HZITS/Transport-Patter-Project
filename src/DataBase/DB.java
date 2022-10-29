@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Objects;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 public class DB {
     private final String url = "jdbc:postgresql://localhost/";
     private final String user = "postgres";
-    private final String password = "nurdaulet";
+    private final String password = "Aisha2016";
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     String username,password1;
     Scanner sc = new Scanner(System.in);
@@ -36,7 +37,7 @@ public class DB {
     public Connection connect() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(url+"Observer", user, password);
+            conn = DriverManager.getConnection(url+"designpattern", user, password);
             System.out.println("Connected to the PostgreSQL server successfully.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -59,15 +60,23 @@ public class DB {
             while (rs.next()) {
                 user1=rs.getString("username");
                 user_pas=rs.getString("password");
+                String status=rs.getString("status");
                 Date unban_date= rs.getDate("unban_date");
                 LocalDate localDate = null;
                 if(unban_date!=null) localDate = ((java.sql.Date) unban_date).toLocalDate();
                 if(user1.equals(username) && user_pas.equals(password1)) {
-                    if(unban_date==null) return true;
+                    if(unban_date==null){
+                        if(Objects.equals(status, "deleted")){
+                            System.out.println("You are dead");
+                            return false;
+                        }else return true;
+                    }
                     else{
-                        if(localDate.compareTo(LocalDate.parse(dateFormat.format(currentDate)))<=0) return true;
+                        if(localDate.compareTo(LocalDate.parse(dateFormat.format(currentDate)))<=0)
+
+                            return true;
                         else{
-                            System.out.println("You are banned");
+                            System.out.println("You are banned until "+ unban_date);
                             return false;
                         }
                     }
