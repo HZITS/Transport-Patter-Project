@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class DB {
     private final String url = "jdbc:postgresql://localhost/";
     private final String user = "postgres";
-    private final String password = "Aisha2016";
+    private final String password = "nurdaulet";
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     String username,password1;
     Scanner sc = new Scanner(System.in);
@@ -37,7 +37,7 @@ public class DB {
     public Connection connect() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(url+"designpattern", user, password);
+            conn = DriverManager.getConnection(url+"Observer", user, password);
             System.out.println("Connected to the PostgreSQL server successfully.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -72,9 +72,7 @@ public class DB {
                         }else return true;
                     }
                     else{
-                        if(localDate.compareTo(LocalDate.parse(dateFormat.format(currentDate)))<=0)
-
-                            return true;
+                        if(localDate.compareTo(LocalDate.parse(dateFormat.format(currentDate)))<=0) return true;
                         else{
                             System.out.println("You are banned until "+ unban_date);
                             return false;
@@ -137,11 +135,10 @@ public class DB {
 //            pst.executeUpdate();
 
         } catch (SQLException ex) {
-
-            Logger lgr = Logger.getLogger(DB.class.getName());
-            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+//            Logger lgr = Logger.getLogger(DB.class.getName());
+//            lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }catch (Exception e){
-            System.out.println(e.getMessage());
+//            System.out.println(e.getMessage());
         }
         return false;
 

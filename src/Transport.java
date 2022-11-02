@@ -51,4 +51,8 @@ public class Transport {
             return car.getDescription();
         }else return plane.getDescription();
     }
+    public String getDescription(boolean isCar){
+        if(isCar) return car.getDescription();
+        else return car.getDescription();
+    }
 }

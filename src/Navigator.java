@@ -1,5 +1,6 @@
 import ConcreteObjects.Car;
 import ConcreteObjects.Plane;
+import DataBase.DB;
 
 import java.util.Scanner;
 
@@ -10,6 +11,94 @@ public class Navigator {
     Car car = new Car();
     Plane plane = new Plane();
     String A, B;
+    DB db = DB.getInstance();
+    int[] distance = new int[5];
+    private boolean isCar;
+    public boolean main(){
+        Scanner scanner = new Scanner(System.in);
+        int option = 1;
+        while (option != 0){
+            switch (option) {
+                case 1 -> {
+                    enterCities();
+                    distance[1] = db.routes(A, B);
+                    System.out.println("Distance is " + distance[1] + " km");
+                }
+                case 2 -> {
+                    Transport transportx = customize();
+                    if(isCar){
+                        transport.setCar(transportx.car);
+                        System.out.println("");
+                    }else {
+                        transport.setPlane(transportx.plane);
+                    }
+                    System.out.println(transport.getDescription(isCar));
+                    System.out.println("Distance from "+ A + " to "+ B + " is "+distance[1]+" km");
+                    System.out.println("Money is - " + transport.money(distance[1]) + " tg");
+                    System.out.println("Time is - " + transport.displacement(distance[1])+ " hour");
+                }
+                case 3 -> {
+                    System.out.println("Choose type of transport");
+                    System.out.println("1. Plane");
+                    System.out.println("2. Car");
+                    option = sc.nextInt();
+                    if(option == 1){
+                        System.out.println(transport.getDescription(false));
+                        transport.setPlane(transport.plane);
+                    }else{
+                        System.out.println(transport.getDescription(true));
+                        transport.setCar(transport.car);
+                    }
+                    System.out.println("Distance from "+ A + " to "+ B + " is "+distance[1]+" km");
+                    System.out.println("Money is - " + transport.money(distance[1]) + " tg");
+                    System.out.println("Time is - " + transport.displacement(distance[1])+ " hour");
+                }
+                case 4 -> {
+                    System.out.println("Distance from "+ A + " to "+ B + " is "+distance[1]+" km");
+                }
+                case 5 -> {
+                    System.out.println("Choose option");
+                    System.out.println("1. Cheapest transport");
+                    System.out.println("2. Fastest transport");
+                    option = sc.nextInt();
+                    if(option == 1){
+                        cheapTrip(distance[1]);
+                    }else {
+                        fastTrip(distance[1]);
+                    }
+                }
+                case 6 -> {
+                    return true;
+                }
+                case 7 -> {
+                    return false;
+                }
+                default -> {
+                    System.out.println("\nInput number invalid");
+                }
+            }
+            System.out.println("Choose option");
+            System.out.println("1. Change distance");
+            System.out.println("2. Customize transport");
+            System.out.println("3. See one type of transport");
+            System.out.println("4. See distance");
+            System.out.println("5. Choose option");
+            System.out.println("6. Exit from account");
+            System.out.println("7. Exit from program");
+            option = sc.nextInt();
+        }
+        return false;
+    }
+    private void enterCities(){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("All cities: Almaty, Astana, Shymkent, Aktobe, Karaganda, Taraz, Pavlodar, Ust-kamenogorsk, Semey, Atyrau, Kyzylorda, Kostanai, Uralsk, Aktau.");
+        System.out.println("Destination point A");
+//        A = sc.nextLine();
+        A = scanner.nextLine();
+        System.out.println("Destination point B");
+        B = scanner.nextLine();
+        System.out.println(A + " | " + B);
+    }
     public void qwerty(String A, String B, int distance){
         this.A=A;
         this.B=B;
@@ -50,9 +139,11 @@ public class Navigator {
             int option = sc.nextInt();
             switch (option) {
                 case 1:
-                    return tf.createTransport(false);
+                    isCar = false;
+                    break;
                 case 2:
-                    return tf.createTransport(true);
+                    isCar = true;
+                    break;
                 case 0:
                     System.out.println("\nAuf viedersehn!");
                     break whileStatement;
@@ -60,6 +151,7 @@ public class Navigator {
                     System.out.println("\nInput number invalid");
                     break;
             }
+            return tf.createTransport(isCar);
         }
         return null;
     }
